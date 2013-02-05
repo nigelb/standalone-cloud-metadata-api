@@ -1,0 +1,8 @@
+#!/bin/bash
+cat << EOF > /etc/sysconfig/network
+NETWORKING=yes
+HOSTNAME={hostname}
+DHCP_HOSTNAME={hostname}
+EOF
+echo {hostname} > /etc/hostname
+
