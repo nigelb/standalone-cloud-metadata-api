@@ -47,7 +47,7 @@ The following command can be used to deploy (Note that you may have to adjust pe
 
 ## Apache Environment Variables
 
-* `SCMA_ENABLE_CGITB` call cgitb.enable().
+* `SCMA_ENABLE_CGITB` if this variable is set to `True` then call cgitb.enable().
 * `SCMA_CONFIG_DIR` set the location of the config directory.
 * `SCMA_PYTHON_PATH_INCLUDE` if the standalone-cloud-metadata-api module is not in your python's system packages, set this variable to the location of the module.
 * `SCMA_CWD_PYTHON_PATH_INCLUDE` if this variable is set to `True` then the current working directory will be set to `SCMA_PYTHON_PATH_INCLUDE`.
