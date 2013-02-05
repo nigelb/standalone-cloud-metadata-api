@@ -3,9 +3,25 @@
 A standalone implementation of some cloud metadata APIs to test VM images against.
 Note that it is not a complete implementation of the API, at this time.
 
-
-
 # Apache
+
+The following is an example of deploying with Apache:
+
+## Deploy
+
+The following command can be used to deploy (Note that you may have to adjust permissions if needed):
+
+    #> echo $USER && pwd
+    user
+    /home/user
+    #> git clone https://github.com/nigelb/standalone-cloud-metadata-api.git
+    #> mkdir -p /var/www/169.254.169.254/cgi-bin
+    #> pushd /var/www/169.254.169.254/cgi-bin
+    #> ln -s /var/user/standalone-cloud-metadata-api/standalone_cloud_api/ec2/ec2_cgi_entrypoint.py ec2_cgi_entrypoint.py
+    #> ln -s /var/user/standalone-cloud-metadata-api/standalone_cloud_api/openstack/openstack_cgi_entrypoint.py
+    #> chmod +x *.py
+    #> popd
+
 
 ### Apache vhost config
 
@@ -15,11 +31,14 @@ Note that it is not a complete implementation of the API, at this time.
         ScriptAliasMatch ^/+openstack(.*) "/var/www/169.254.169.254/cgi-bin/openstack_cgi_entrypoint.py"
         ScriptAliasMatch ^/+2009-04-04/+(meta|user)-data(.*) "/var/www/169.254.169.254/cgi-bin/ec2_cgi_entrypoint.py"
 
-        SetEnv SCMA_CONFIG_DIR /etc/apache/scma/
+        SetEnv SCMA_CONFIG_DIR /var/user/standalone-cloud-metadata-api/config
+        SetEnv SCMA_PYTHON_PATH_INCLUDE "/var/user/standalone-cloud-metadata-api"
+        SetEnv SCMA_CWD_PYTHON_PATH_INCLUDE "True"
+        SetEnv SCMA_ENABLE_CGITB "True"
 
         <Directory "/var/www/169.254.169.254/cgi-bin">
             AllowOverride None
-            Options None
+            Options FollowSymLinks
             Order allow,deny
             Allow from all
         </Directory>
