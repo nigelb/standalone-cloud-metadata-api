@@ -14,30 +14,9 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from standalone_cloud_api.util.templating import register_template_plugin, PythonFormatTemplate
+def get_machine_meta_data(request):
+    if request.api_config.get_machine_meta_data is not None:
+        return request.api_config.get_machine_meta_data(request)
+    else:
+        return {}
 
-userdata_directory = "examples/userdata"
-key_directory = "examples/keys"
-
-machine_identity_order = ("get_dns_name","get_mac_address", "get_ip_address")
-
-
-register_template_plugin(PythonFormatTemplate("\.pf$"))
-
-
-#
-#def example_key_search(request):
-#   import os.path
-#   return os.path.join(key_directory, "default")
-#
-#
-key_search_function = None
-
-#
-#def example_userdata_search(request):
-#   import os.path
-#   return os.path.join(userdata_directory, "default")
-#
-#userdata_search_function = example_userdata_search
-#
-userdata_search_function = None

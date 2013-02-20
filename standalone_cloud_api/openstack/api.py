@@ -16,6 +16,7 @@
 
 import uuid, json
 from standalone_cloud_api.util.keys import find_public_keys
+from standalone_cloud_api.util.metadata import get_machine_meta_data
 from standalone_cloud_api.util.network import create_api_routes, MetaDataAPIHandler
 
 OPENSTACK_API_ID="Openstack"
@@ -50,7 +51,7 @@ def launch_index(request):
 
 @Route("/openstack/2012-08-10/meta")
 def meta(request):
-    return request.api_config.get_machine_meta_data(request.machine_id)
+    return get_machine_meta_data(request)
 
 @Route("/openstack/2012-08-10/public_keys")
 def public_keys(request):

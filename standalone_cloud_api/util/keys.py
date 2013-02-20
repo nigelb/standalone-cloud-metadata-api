@@ -33,7 +33,7 @@ def find_key_path(request):
 def find_public_keys(request):
     key_path = None
     if request.api_config.key_search_function is not None:
-        key_path = request.api_config.key_search_function(request.machine_id)
+        key_path = request.api_config.key_search_function(request)
     else:
         key_path = find_key_path(request)
         if key_path is None:

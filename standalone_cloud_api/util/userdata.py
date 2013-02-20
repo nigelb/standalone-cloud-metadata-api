@@ -40,8 +40,8 @@ def find_template_path(request):
 
 def create_user_data(request):
     template_path = None
-    if "template_search_function" in request.api_config.__dict__ and request.api_config.key_search_function is not None:
-        template_path = request.api_config.template_search_function(request.machine_id)
+    if request.api_config.userdata_search_function is not None and request.api_config.key_search_function is not None:
+        template_path = request.api_config.userdata_search_function(request)
     else:
         template_path = find_template_path(request)
         if template_path is None:

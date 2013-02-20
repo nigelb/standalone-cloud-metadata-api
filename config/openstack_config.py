@@ -28,7 +28,7 @@ launch_index = "0"
 register_template_plugin(PythonFormatTemplate("\.pf$"))
 
 #
-#def example_key_search(machine_id):
+#def example_key_search(request):
 #   import os.path
 #   return os.path.join(key_directory, "default")
 #
@@ -38,7 +38,7 @@ key_search_function = None
 
 
 #
-#def example_userdata_search(machine_id):
+#def example_userdata_search(request):
 #   import os.path
 #   return os.path.join(userdata_directory, "default")
 #
@@ -47,9 +47,11 @@ key_search_function = None
 userdata_search_function = None
 
 
-def get_machine_meta_data(machine_id):
+def _get_machine_meta_data(request):
     return {
         "role": "master"
     }
+
+get_machine_meta_data =  _get_machine_meta_data
 
 
