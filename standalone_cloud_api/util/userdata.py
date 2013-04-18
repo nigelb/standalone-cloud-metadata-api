@@ -17,6 +17,7 @@
 import os, glob
 from standalone_cloud_api.util.cloud_init_mime_encoder import encode
 from standalone_cloud_api.util.templating import find_template_plugin
+import scma_userdata
 
 def template_data(data, filename, template_dictionary, mime_type):
     template_plugin = find_template_plugin(filename)
@@ -40,8 +41,8 @@ def find_template_path(request):
 
 def create_user_data(request):
     template_path = None
-    if request.api_config.userdata_search_function is not None and request.api_config.key_search_function is not None:
-        template_path = request.api_config.userdata_search_function(request)
+    if scma_userdata.userdata_search_function is not None and request.api_config.key_search_function is not None:
+        template_path = scma_userdata.userdata_search_function(request)
     else:
         template_path = find_template_path(request)
         if template_path is None:
@@ -53,6 +54,6 @@ def create_user_data(request):
     files = [os.path.join(template_path, x) for x in glob.glob1(template_path, "*")]
     request.set_header("Content-Type","multipart/mixed")
     template_namespace = {"hostname":request.hostname}
-    if request.api_config.userdata_template_namespace is not None:
-        template_namespace = request.api_config.userdata_template_namespace(request)
+    if scma_userdata.userdata_template_namespace is not None:
+        template_namespace = scma_userdata.userdata_template_namespace(request)
     return encode(files, template_namespace, template_function=template_data)

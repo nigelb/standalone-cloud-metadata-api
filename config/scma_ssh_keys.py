@@ -14,21 +14,13 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-userdata_directory = "examples/userdata"
-key_directory = "examples/keys"
 
-machine_identity_order = ("get_dns_name","get_mac_address", "get_ip_address")
-
-default_availability_zone = "nova"
-
-launch_index = "0"
-
-
-def _get_machine_meta_data(request):
-    return {
-        "role": "master"
-    }
-
-get_machine_meta_data =  _get_machine_meta_data
-
-
+##Customize the search path for looking for ssh keys
+#
+#def example_key_search(request):
+#   import os.path
+#   return os.path.join(key_directory, "default")
+#
+#ssh_key_search_function = example_key_search
+#
+ssh_key_search_function = None

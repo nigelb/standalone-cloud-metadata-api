@@ -14,7 +14,7 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import glob, os
+import glob, os, scma_ssh_keys
 
 def find_key_path(request):
     for order in request.api_config.machine_identity_order:
@@ -32,8 +32,8 @@ def find_key_path(request):
 
 def find_public_keys(request):
     key_path = None
-    if request.api_config.key_search_function is not None:
-        key_path = request.api_config.key_search_function(request)
+    if scma_ssh_keys.ssh_key_search_function is not None:
+        key_path = scma_ssh_keys.ssh_key_search_function(request)
     else:
         key_path = find_key_path(request)
         if key_path is None:
