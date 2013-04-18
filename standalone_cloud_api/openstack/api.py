@@ -49,7 +49,7 @@ def hostname(request):
 def launch_index(request):
     return request.api_config.launch_index
 
-@Route("/openstack/2012-08-10/meta")
+@Route("/openstack/2012-08-10/meta$")
 def meta(request):
     return get_machine_meta_data(request)
 
