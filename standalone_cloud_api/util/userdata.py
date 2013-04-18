@@ -52,4 +52,7 @@ def create_user_data(request):
 
     files = [os.path.join(template_path, x) for x in glob.glob1(template_path, "*")]
     request.set_header("Content-Type","multipart/mixed")
-    return encode(files, {"hostname":request.hostname}, template_function=template_data)
+    template_namespace = {"hostname":request.hostname}
+    if request.api_config.userdata_template_namespace is not None:
+        template_namespace = request.api_config.userdata_template_namespace(request)
+    return encode(files, template_namespace, template_function=template_data)

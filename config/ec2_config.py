@@ -24,7 +24,7 @@ machine_identity_order = ("get_dns_name","get_mac_address", "get_ip_address")
 
 register_template_plugin(PythonFormatTemplate("\.pf$"))
 
-
+##Customize the search path for looking for ssh keys
 #
 #def example_key_search(request):
 #   import os.path
@@ -33,6 +33,8 @@ register_template_plugin(PythonFormatTemplate("\.pf$"))
 #
 key_search_function = None
 
+##By defining userdata_search_function you can customize the way we find
+##the userdata directory.
 #
 #def example_userdata_search(request):
 #   import os.path
@@ -41,3 +43,15 @@ key_search_function = None
 #userdata_search_function = example_userdata_search
 #
 userdata_search_function = None
+
+
+##When the userdata template plugin is run, it is passed a namespace from which
+##to get its variables from. By default it is passed: {"hostname":request.hostname}
+##If you wish to customize the namespace then see this example:
+#
+#def example_userdata_template_namespace(request):
+#    return {"hostname":request.hostname}
+#
+#userdata_template_namespace = example_userdata_template_namespace
+#
+userdata_template_namespace = None
