@@ -39,6 +39,13 @@ For Apache servers, set the "SetEnv" directive.
 
     sys.path.append(os.environ[SCMA_CONFIG_DIR_ENVIRONMENT_VARIABLE])
     import openstack_config
+    if "openstack_metadata_api_enabled" not in openstack_config.__dict__ or not openstack_config.openstack_metadata_api_enabled:
+        print "Status:404"
+        print "Content-Type: text/html"
+        print""
+        print "HTTP/1.1 404 Not Found"
+        sys.stderr.write("The configuration option openstack_metadata_api_enabled must exist and be set to True in openstack_config.py")
+        sys.exit(404)
     from standalone_cloud_api.openstack.api import OpenstackMetaDataAPI
     openstack_config.SCMA_ENABLE_CGITB = False
     if SCMA_ENABLE_CGITB in os.environ and os.environ[SCMA_ENABLE_CGITB].lower() == "true":

@@ -39,6 +39,14 @@ For Apache servers, set the "SetEnv" directive.
 
     sys.path.append(os.environ[SCMA_CONFIG_DIR_ENVIRONMENT_VARIABLE])
     import ec2_config
+    if "ec2_metadata_api_enabled" not in ec2_config.__dict__ or not ec2_config.ec2_metadata_api_enabled:
+        print "Status:404"
+        print "Content-Type: text/html"
+        print""
+        print "HTTP/1.1 404 Not Found"
+        sys.stderr.write("The configuration option ec2_metadata_api_enabled must exist and be set to True in ec2_config.py")
+        sys.exit(404)
+
     from standalone_cloud_api.ec2.api import EC2MetaDataAPI
     ec2_config.SCMA_ENABLE_CGITB = False
     if SCMA_ENABLE_CGITB in os.environ and os.environ[SCMA_ENABLE_CGITB].lower() == "true":
